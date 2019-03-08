@@ -3,13 +3,13 @@ from bs4 import BeautifulSoup
 import requests
 from collections import namedtuple
 from dateparser import parse
-from text_filtering import get_time, get_date
+from text_filtering import get_time, get_date, get_route
 from misc_helpers import fatal_keywords
 import pickle
 
 page = requests.get("https://www.elcomercio.com/search/?query=bus%20accidente%20ecuador")
 soup = BeautifulSoup(page.content, "html.parser")
-Story = namedtuple('Story', 'url date title summary article')
+Story = namedtuple('Story', 'url date title summary article, keywords')
 
 
 def get_stories(soup):
@@ -23,15 +23,17 @@ def get_stories(soup):
         date = parse(article.find("div", {"class": "publishDate"}).span.text, languages=["es"])
         title = article.find("a", {"class": "title"}).text.strip()
         summary = article.find("div", {"class": "epigraph"}).text.strip()
+        temp_story = None
         for keyword in fatal_keywords:
             if keyword in title + " " + summary:
                 article_object = Article(url=url, language='es')
                 article_object.download()
+                article_soup = BeautifulSoup(article_object.html, "html.parser")
+                bold_words = [bold.text for bold in article_soup.findAll("b")]
                 article_object.parse()
-                temp_story = Story(url, date, title, summary, article_object.text)
+                full_text = article_object.text
+                temp_story = Story(url, date, title, summary, full_text, bold_words)
                 break
-            else:
-                temp_story = None
         if temp_story:
             yield temp_story
 
@@ -42,6 +44,7 @@ with open("articles.pickle", "rb") as f:
 for story in temp_data:
     print(story.title, story.summary)
     print(story.date)
-    get_date(story)
-    get_time(story)
+    print(get_date(story))
+    print(get_time(story))
+    print(story.keywords)
     print("\n")
