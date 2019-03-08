@@ -3,13 +3,13 @@ from bs4 import BeautifulSoup
 import requests
 from collections import namedtuple
 from dateparser import parse
-from text_filtering import get_time, get_date, get_route
+from text_filtering import get_time, get_date, get_route, get_deaths
 from misc_helpers import fatal_keywords
 import pickle
 
 page = requests.get("https://www.elcomercio.com/search/?query=bus%20accidente%20ecuador")
 soup = BeautifulSoup(page.content, "html.parser")
-Story = namedtuple('Story', 'url date title summary article, keywords')
+Story = namedtuple('Story', 'url date title summary article keywords')
 
 
 def get_stories(soup):
@@ -42,9 +42,10 @@ with open("articles.pickle", "rb") as f:
     temp_data = pickle.load(f)
 
 for story in temp_data:
-    print(story.title, story.summary)
-    print(story.date)
-    print(get_date(story))
-    print(get_time(story))
-    print(get_route(story))
+    print(f"Story title: {story.title}\nStory Summary: {story.summary}")
+    print(f"Story pub date: {story.date}")
+    print(f"Accident date: {get_date(story)}")
+    print(f"Accident time: {get_time(story)}")
+    print(f"Accident route: {get_route(story)}")
+    print(f"Deaths: {get_deaths(story)}")
     print("\n")

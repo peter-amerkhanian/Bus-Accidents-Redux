@@ -1,4 +1,4 @@
-from regular_expressions import date_regex, time_regex, time_regex_detailed, route_regex
+from regular_expressions import date_regex, time_regex, time_regex_detailed, route_regex, death_regex
 from misc_helpers import get_first_match
 
 
@@ -42,4 +42,17 @@ def get_route(story):
     match_object = [keyword for keyword in story.keywords if route_regex.search(keyword)]
     if len(match_object):
         return match_object
+
+
+def get_deaths(story):
+    for regex in death_regex():
+        match_object1 = regex.search(f"{story.title} {story.summary}")
+        if match_object1:
+            return match_object1.group()
+    print("first try failed")
+    for regex in death_regex():
+        match_object2 = regex.search(story.article)
+        if match_object2:
+            return match_object2.group()
+    print("second try failed")
 
