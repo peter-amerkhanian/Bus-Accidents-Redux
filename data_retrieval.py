@@ -12,16 +12,16 @@ soup = BeautifulSoup(page.content, "html.parser")
 
 def get_stories(soup):
     """
-
-    :param soup:
-    :return:
+    a generator that yields each story from el commercio
+    :param soup: BeautifulSoup object
+    :return: named-tuple
     """
     Story = namedtuple('Story', 'url date title summary article')
     for article in soup.findAll("div", {"class": "two-cols-article"}):
-        url = "https://www.elcomercio.com" + article.find("a", {"class":"title"}).get("href")
+        url = "https://www.elcomercio.com" + article.find("a", {"class": "title"}).get("href")
         date = parse(article.find("div", {"class": "publishDate"}).span.text, languages=["es"])
-        title = article.find("a", {"class":"title"}).text.strip()
-        summary = article.find("div", {"class":"epigraph"}).text.strip()
+        title = article.find("a", {"class": "title"}).text.strip()
+        summary = article.find("div", {"class": "epigraph"}).text.strip()
         for keyword in fatal_keywords:
             if keyword in title + " " + summary:
                 article_object = Article(url=url, language='es')
