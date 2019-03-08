@@ -1,38 +1,43 @@
-from regular_expressions import dateRegex, timeRegex, timeRegexDetailed
+from regular_expressions import date_regex, time_regex, time_regex_detailed, route_regex
 from misc_helpers import get_first_match
 
 
 def get_date(story):
-    match_object1 = dateRegex.search(f"{story.title} {story.summary}")
+    match_object1 = date_regex.search(f"{story.title} {story.summary}")
     if match_object1:
-        print(match_object1.group())
+        return match_object1.group()
     else:
         print("first try failed")
-        match_object2 = dateRegex.search(story.article)
+        match_object2 = date_regex.search(story.article)
         if match_object2:
-            print(match_object2.group())
+            return match_object2.group()
         else:
             print("second try failed")
 
 
 def get_time(story):
-    match_object1 = timeRegex.search(f"{story.title} {story.summary}")
-    match_object2 = timeRegexDetailed.search(f"{story.title} {story.summary}")
+    match_object1 = time_regex.search(f"{story.title} {story.summary}")
+    match_object2 = time_regex_detailed.search(f"{story.title} {story.summary}")
     if match_object1 and match_object2:
-        print(get_first_match(match_object1, match_object2))
+        return get_first_match(match_object1, match_object2).group()
     elif match_object1:
-        print(match_object1)
+        return match_object1.group()
     elif match_object2:
-        print(match_object2.group())
+        return match_object2.group()
     else:
         print("first try failed")
-        match_object3 = timeRegex.search(story.article)
-        match_object4 = timeRegexDetailed.search(story.article)
+        match_object3 = time_regex.search(story.article)
+        match_object4 = time_regex_detailed.search(story.article)
         if match_object3 and match_object4:
-            print(get_first_match(match_object3, match_object4))
+            return get_first_match(match_object3, match_object4).group()
         elif match_object1:
-            print(match_object1)
+            return match_object1.group()
         elif match_object2:
-            print(match_object2)
+            return match_object2.group()
         else:
             print("second try failed")
+
+
+def get_route(story):
+    match_object = route_regex.search(f"{story.title} {story.summary}")
+    return match_object
