@@ -39,5 +39,7 @@ def get_time(story):
 
 
 def get_route(story):
-    match_object = route_regex.search(f"{story.title} {story.summary}")
-    return match_object
+    match_object = [keyword for keyword in story.keywords if route_regex.search(keyword)]
+    if len(match_object):
+        return match_object
+

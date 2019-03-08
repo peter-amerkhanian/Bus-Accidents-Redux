@@ -46,5 +46,5 @@ for story in temp_data:
     print(story.date)
     print(get_date(story))
     print(get_time(story))
-    print(story.keywords)
+    print(get_route(story))
     print("\n")
