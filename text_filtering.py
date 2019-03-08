@@ -26,8 +26,13 @@ def get_time(story):
         print(match_object2.group())
     else:
         print("first try failed")
-        match_object3 = timeRegex.findall(story.article.text)
-        if len(match_object3):
-            print(match_object3)
+        match_object3 = timeRegex.search(story.article.text)
+        match_object4 = timeRegexDetailed.search(story.article.text)
+        if match_object3 and match_object4:
+            print(get_first_match(match_object3, match_object4))
+        elif match_object1:
+            print(match_object1)
+        elif match_object2:
+            print(match_object2)
         else:
             print("second try failed")
