@@ -1,14 +1,12 @@
 from newspaper import Article
 from bs4 import BeautifulSoup
-import requests
 from collections import namedtuple
 from dateparser import parse
 from text_filtering import get_time, get_date, get_route, get_deaths
 from misc_helpers import fatal_keywords
 import pickle
 
-page = requests.get("https://www.elcomercio.com/search/?query=bus%20accidente%20ecuador")
-soup = BeautifulSoup(page.content, "html.parser")
+
 Story = namedtuple('Story', 'url date title summary article keywords')
 
 
@@ -25,7 +23,7 @@ def get_stories(soup):
         summary = article.find("div", {"class": "epigraph"}).text.strip()
         temp_story = None
         for keyword in fatal_keywords:
-            if keyword in title + " " + summary:
+            if keyword in title:
                 article_object = Article(url=url, language='es')
                 article_object.download()
                 article_soup = BeautifulSoup(article_object.html, "html.parser")
@@ -38,14 +36,16 @@ def get_stories(soup):
             yield temp_story
 
 
-with open("articles.pickle", "rb") as f:
-    temp_data = pickle.load(f)
+# TO DO: Get the deaths to cross reference with numbers
+if __name__ == '__main__':
+    with open("articles.pickle", "rb") as f:
+        temp_data = pickle.load(f)
 
-for story in temp_data:
-    print(f"Story title: {story.title}\nStory Summary: {story.summary}")
-    print(f"Story pub date: {story.date}")
-    print(f"Accident date: {get_date(story)}")
-    print(f"Accident time: {get_time(story)}")
-    print(f"Accident route: {get_route(story)}")
-    print(f"Deaths: {get_deaths(story)}")
-    print("\n")
+    for story in temp_data:
+        print(f"Story title: {story.title}\nStory Summary: {story.summary}")
+        print(f"Story pub date: {story.date}")
+        print(f"Accident date: {get_date(story)}")
+        print(f"Accident time: {get_time(story)}")
+        print(f"Accident route: {get_route(story)}")
+        print(f"Deaths: {get_deaths(story)}")
+        print("\n")
