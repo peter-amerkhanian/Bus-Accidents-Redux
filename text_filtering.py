@@ -37,19 +37,29 @@ def get_time(story):
 
 
 def get_route(story):
-    match_object = [keyword for keyword in story.keywords if route_regex.search(keyword)]
+    match_object = [keyword.strip() for keyword in story.keywords if route_regex.search(keyword)]
     if len(match_object):
-        return match_object
+        return match_object[0]
+    else:
+        match_object1 = route_regex.search(f"{story.title} {story.summary}")
+        if match_object1:
+            return match_object1.group()
 
 
 def get_deaths(story):
     for regex in death_regex():
         match_object1 = regex.search(f"{story.title} {story.summary}")
         if match_object1:
-            return match_object1.group()
+            deaths = match_object1.group(1).lower()
+            if deaths == "un":
+                deaths = "una"
+            return deaths
     for regex in death_regex():
         match_object2 = regex.search(story.article)
         if match_object2:
-            return match_object2.group()
+            deaths = match_object2.group(1).lower()
+            if deaths == "un":
+                deaths = "una"
+            return deaths
     return None
 
