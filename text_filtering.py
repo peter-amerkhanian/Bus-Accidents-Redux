@@ -53,13 +53,15 @@ def get_deaths(story):
             deaths = match_object1.group(1).lower()
             if not deaths.isdigit():
                 deaths = spanish_to_english.get(deaths)
-            return deaths
+            if deaths and int(deaths) < 60:
+                return int(deaths)
     for regex in death_regex():
         match_object2 = regex.search(story.article)
         if match_object2:
             deaths = match_object2.group(1).lower()
             if not deaths.isdigit():
                 deaths = spanish_to_english.get(deaths)
-            return deaths
+            if deaths and int(deaths) < 60:
+                return int(deaths)
     return None
 
