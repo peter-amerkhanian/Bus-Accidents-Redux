@@ -18,6 +18,7 @@ spanish_to_english = {"uno": 1,
                       "catorce": 14,
                       "quince": 15,}
 
+
 def get_first_match(match1, match2):
     if match1.start() < match2.start():
         return match1
