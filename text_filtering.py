@@ -1,5 +1,5 @@
 from regular_expressions import date_regex, time_regex, time_regex_detailed, route_regex, death_regex
-from misc_helpers import get_first_match
+from misc_helpers import get_first_match, spanish_to_english
 
 
 def get_date(story):
@@ -51,15 +51,15 @@ def get_deaths(story):
         match_object1 = regex.search(f"{story.title} {story.summary}")
         if match_object1:
             deaths = match_object1.group(1).lower()
-            if deaths == "un":
-                deaths = "una"
+            if not deaths.isdigit():
+                deaths = spanish_to_english.get(deaths)
             return deaths
     for regex in death_regex():
         match_object2 = regex.search(story.article)
         if match_object2:
             deaths = match_object2.group(1).lower()
-            if deaths == "un":
-                deaths = "una"
+            if not deaths.isdigit():
+                deaths = spanish_to_english.get(deaths)
             return deaths
     return None
 

@@ -10,10 +10,12 @@ route_regex = re.compile(r'(\s[A-Z][a-z]{0,10})?\s[A-Z]\w+\s?[-–][-]?\s?[A-Z]\
                          r'(\s[A-Z][a-z]{0,10})?\s[A-Z]\w+\sa\s[A-Z]\w+(\s[A-Z][a-z]{0,10})?/'
                          r'|([A-Z][a-z]{0,10})?\s[A-Z]\w+\shacia\s[A-Z]\w+(\s[A-Z][a-z]{0,10})?')
 
-
+# To do add una persona fallecio
 def death_regex():
     for regex in [r'(\d{1,3})\spersona(s)?\sfallecida(s)?\b',
                   r'(\w{1,7})\spersona(s)?\sfallecida(s)?\b',
+                  r'(\d{1,3})\spersona\sfalleció\b',
+                  r'(\w{1,7})\spersona\sfalleció\b',
                   r'(\d{1,3})\spersonas\smuertas',
                   r'(\w{1,7})\spersonas\smuertas',
                   r'(\w{1,7})\smuerto(s)?',
