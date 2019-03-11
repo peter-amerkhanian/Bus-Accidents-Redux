@@ -1,15 +1,18 @@
 from filters import date_regex, time_regex, time_regex_detailed, route_regex, death_regex
 from filters import get_first_match, spanish_to_english
+from dateparser import parse
 
 
 def get_date(story):
     match_object1 = date_regex.search(f"{story.title} {story.summary}")
     if match_object1:
-        return match_object1.group()
+        date = parse(match_object1.group(), languages=['es'])
+        return date.replace(year=story.date.year)
     else:
         match_object2 = date_regex.search(story.article)
         if match_object2:
-            return match_object2.group()
+            date = parse(match_object2.group(), languages=['es'])
+            return date.replace(year=story.date.year)
         else:
             return None
 
