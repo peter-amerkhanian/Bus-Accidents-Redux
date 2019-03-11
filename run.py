@@ -6,4 +6,4 @@ with open("filters/articles.pickle", "rb") as f:
 
 for story in temp_data:
     story.process()
-    print(story)
+    print(story.to_dict())

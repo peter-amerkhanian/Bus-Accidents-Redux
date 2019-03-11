@@ -25,3 +25,12 @@ class Story:
         self.accident_time = get_time(self)
         self.route = get_route(self)
         self.deaths = get_deaths(self)
+
+    def to_dict(self):
+        return {"title": self.title,
+                "url": self.url,
+                "pub_date": self.date,
+                "date": self.accident_date,
+                "time": self.accident_time,
+                "deaths": self.deaths,
+                "route": self.route}
