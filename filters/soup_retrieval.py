@@ -14,7 +14,5 @@ def get_soup(last_page):
 list_of_articles = []
 for soup in list(get_soup(10)):
     list_of_articles.extend(list(get_stories(soup)))
-print(type(list(get_soup(10))))
-print(list(get_soup(10)))
 with open('articles.pickle', 'wb') as f:
     pickle.dump(list_of_articles, f)

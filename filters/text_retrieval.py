@@ -3,9 +3,7 @@ from bs4 import BeautifulSoup
 from collections import namedtuple
 from dateparser import parse
 from filters import fatal_keywords
-
-
-Story = namedtuple('Story', 'url date title summary article keywords')
+from filters.Story import Story
 
 
 def get_stories(soup):
