@@ -6,12 +6,12 @@ from dateparser import parse
 
 def get_date(story):
     match_object1 = date_regex.search(f"{story.title} {story.summary}")
-    match_object2 = date_regex.search(story.article)
     if match_object1:
         if len([month for month in months if month in match_object1.group()]):
             date = parse(match_object1.group(), languages=['es'])
             return date.replace(year=story.date.year)
-    elif match_object2:
+    match_object2 = date_regex.search(story.article)
+    if match_object2:
         print("searching article")
         if len([month for month in months if month in match_object2.group()]):
             date = parse(match_object2.group(), languages=['es'])
