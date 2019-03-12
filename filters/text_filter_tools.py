@@ -5,14 +5,17 @@ from dateparser import parse
 
 def get_date(story):
     match_object1 = date_regex.search(f"{story.title} {story.summary}")
+
     if match_object1:
         date = parse(match_object1.group(), languages=['es'])
-        return date.replace(year=story.date.year)
+        if date:
+            return date.replace(year=story.date.year)
     else:
         match_object2 = date_regex.search(story.article)
         if match_object2:
             date = parse(match_object2.group(), languages=['es'])
-            return date.replace(year=story.date.year)
+            if date:
+                return date.replace(year=story.date.year)
         else:
             return None
 
@@ -31,22 +34,23 @@ def get_time(story):
         match_object4 = time_regex_detailed.search(story.article)
         if match_object3 and match_object4:
             return get_first_match(match_object3, match_object4).group()
-        elif match_object1:
-            return match_object1.group()
-        elif match_object2:
-            return match_object2.group()
+        elif match_object3:
+            return match_object3.group()
+        elif match_object4:
+            return match_object4.group()
         else:
             return None
 
 
 def get_route(story):
-    match_object = [keyword.strip() for keyword in story.keywords if route_regex.search(keyword)]
-    if len(match_object):
-        return match_object[0]
-    else:
-        match_object1 = route_regex.search(f"{story.title} {story.summary}")
-        if match_object1:
-            return match_object1.group()
+    for regex in route_regex():
+        match_object = [keyword.strip() for keyword in story.keywords if regex.search(keyword)]
+        if len(match_object):
+            return match_object[0]
+        else:
+            match_object1 = regex.search(f"{story.title} {story.summary}")
+            if match_object1:
+                return match_object1.group()
 
 
 def get_deaths(story):

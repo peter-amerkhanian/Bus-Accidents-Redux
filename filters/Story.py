@@ -22,6 +22,9 @@ class Story:
 
     def process(self):
         self.accident_date = get_date(self)
+        # if not self.accident_date:
+        #     self.accident_date = self.date
+        #     print("missing date")
         self.accident_time = get_time(self)
         self.route = get_route(self)
         self.deaths = get_deaths(self)

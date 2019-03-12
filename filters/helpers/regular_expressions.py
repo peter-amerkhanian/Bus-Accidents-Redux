@@ -1,14 +1,18 @@
 import re
 
-date_regex = re.compile(r'\b\d{1,2}\sde\s[a-z]{5,11}\b(\sde\s20\d\d)?')
+date_regex = re.compile(r'\b\d{1,2}\sde\s[a-z]{4,11}(\sde\s20\d\d)?\b')
 time_regex = re.compile(r'\d{1,2}:\d{1,2}', re.IGNORECASE)
 time_regex_detailed = re.compile(r'\bmañana\b|\bmedianoche\b|\btarde\b|/'
                                  r'\bmediodía\b|\bmad(r)?ugada\b|\bnoche\b|\bprimeras horas de la mañana\b',
                                  re.IGNORECASE)
 
-route_regex = re.compile(r'(\s[A-Z][a-z]{0,10})?\s[A-Z]\w+\s?[-–][-]?\s?[A-Z]\w+(\s[A-Z][a-z]{0,10})?|/'
-                         r'(\s[A-Z][a-z]{0,10})?\s[A-Z]\w+\sa\s[A-Z]\w+(\s[A-Z][a-z]{0,10})?/'
-                         r'|([A-Z][a-z]{0,10})?\s[A-Z]\w+\shacia\s[A-Z]\w+(\s[A-Z][a-z]{0,10})?')
+
+def route_regex():
+    for regex in [r'([A-Z]\w+\s)?[A-Z]\w+\s?[-–]-?\s?[A-Z]\w+(\s[A-Z]\w+)?',
+                  r'([A-Z]\w+\s)?[A-Z]\w+\sa\s[A-Z]\w+(\s[A-Z]\w+)?',
+                  r'([A-Z]\w+\s)?[A-Z]\w+\shacia\s[A-Z]\w+(\s[A-Z]\w+)?']:
+        yield re.compile(regex, re.IGNORECASE)
+
 
 # To do add una persona fallecio
 def death_regex():
