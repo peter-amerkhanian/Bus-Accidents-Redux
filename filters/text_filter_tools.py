@@ -12,7 +12,6 @@ def get_date(story):
             return date.replace(year=story.date.year)
     match_object2 = date_regex.search(story.article)
     if match_object2:
-        print("searching article")
         if len([month for month in months if month in match_object2.group()]):
             date = parse(match_object2.group(), languages=['es'])
             return date.replace(year=story.date.year)
