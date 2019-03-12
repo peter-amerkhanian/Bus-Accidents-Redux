@@ -8,9 +8,9 @@ with open("filters/articles.pickle", "rb") as f:
 data = []
 for story in temp_data:
     story.process()
-    story_dict = story.to_dict()
-    missing_values = [val for val in story_dict.values() if not val]
-    if len(missing_values) > 0:
+    # story_dict = story.to_dict()
+    # missing_values = [val for val in story_dict.values() if not val]
+    if not story.accident_date:
         print(story)
         data.append(story)
 print(len(data))

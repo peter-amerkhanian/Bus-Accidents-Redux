@@ -1,6 +1,6 @@
 import re
 
-date_regex = re.compile(r'\b\d{1,2}\sde\s[a-z]{4,11}(\sde\s20\d\d)?\b')
+date_regex = re.compile(r'\s\d{1,2}\sde\s[a-z]{4,11}(\sdel\s20\d\d)?\s')
 time_regex = re.compile(r'\d{1,2}:\d{1,2}', re.IGNORECASE)
 time_regex_detailed = re.compile(r'\bmañana\b|\bmedianoche\b|\btarde\b|/'
                                  r'\bmediodía\b|\bmad(r)?ugada\b|\bnoche\b|\bprimeras horas de la mañana\b',

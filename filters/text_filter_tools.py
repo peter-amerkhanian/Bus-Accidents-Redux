@@ -1,23 +1,23 @@
 from filters import date_regex, time_regex, time_regex_detailed, route_regex, death_regex
 from filters import get_first_match, spanish_to_english
+from filters.helpers import months
 from dateparser import parse
 
 
 def get_date(story):
     match_object1 = date_regex.search(f"{story.title} {story.summary}")
-
+    match_object2 = date_regex.search(story.article)
     if match_object1:
-        date = parse(match_object1.group(), languages=['es'])
-        if date:
+        if len([month for month in months if month in match_object1.group()]):
+            date = parse(match_object1.group(), languages=['es'])
+            return date.replace(year=story.date.year)
+    elif match_object2:
+        print("searching article")
+        if len([month for month in months if month in match_object2.group()]):
+            date = parse(match_object2.group(), languages=['es'])
             return date.replace(year=story.date.year)
     else:
-        match_object2 = date_regex.search(story.article)
-        if match_object2:
-            date = parse(match_object2.group(), languages=['es'])
-            if date:
-                return date.replace(year=story.date.year)
-        else:
-            return None
+        return None
 
 
 def get_time(story):
