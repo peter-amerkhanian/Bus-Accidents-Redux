@@ -11,7 +11,7 @@ def route_regex():
     for regex in [r'([A-Z]\w+\s)?[A-Z]\w+\s?[-–]-?\s?[A-Z]\w+(\s[A-Z]\w+)?',
                   r'([A-Z]\w+\s)?[A-Z]\w+\sa\s[A-Z]\w+(\s[A-Z]\w+)?',
                   r'([A-Z]\w+\s)?[A-Z]\w+\shacia\s[A-Z]\w+(\s[A-Z]\w+)?']:
-        yield re.compile(regex, re.IGNORECASE)
+        yield re.compile(regex)
 
 
 # To do add una persona fallecio
@@ -30,6 +30,7 @@ def death_regex():
                   r'(\w{1,7})\sfallecid[oa](s)?',  # fix 27, the un fallecido
                   r'(\d{1,3})\spersonas\s(que\s)?fallecieron',
                   r'(\w{1,7})\spersonas\s(que\s)?fallecieron',
+                  r'(\w{1,7})\s(\w+\s){1,3}fallecieron',
                   r'\sla\smuerte\sde\s(\w{1,7})\s',
                   r'\smurieron\s(\w{1,7})',
                   r'\ssegado\s(\w{1,7}\svidas\b)',
