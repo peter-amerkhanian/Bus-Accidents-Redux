@@ -28,3 +28,7 @@ def get_first_match(match1, match2):
     else:
         return match2
 
+
+def make_clickable(val, text):
+    return '<a target="_blank" href="{}">{}</a>'.format(val, text)
+
