@@ -2,8 +2,8 @@ from newspaper import Article
 from bs4 import BeautifulSoup
 from collections import namedtuple
 from dateparser import parse
-from filters import fatal_keywords
-from filters.Story import Story
+from data_retrieval import fatal_keywords
+from data_retrieval.Story import Story
 
 
 def get_stories(soup):

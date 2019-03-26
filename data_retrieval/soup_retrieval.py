@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-from filters import get_stories
+from data_retrieval import get_stories
 import pickle
 
 
@@ -11,9 +11,10 @@ def get_soup(last_page):
         yield page_soup
 
 
-# list_of_articles = []
-# for soup in get_soup(10):
-#     list_of_articles.extend(get_stories(soup))
-list_of_articles = [get_stories(soup) for soup in get_soup(10)]
-with open('articles.pickle', 'wb') as f:
-    pickle.dump(list_of_articles, f)
+def pickle_soup(pages):
+    list_of_articles = []
+    for soup in get_soup(pages):
+        list_of_articles.extend(get_stories(soup))
+    with open('articles.pickle', 'wb') as f:
+        pickle.dump(list_of_articles, f)
+
