@@ -1,3 +1,5 @@
+import datetime
+
 fatal_keywords = ['muert', 'fallec', 'murier', 'muri', 'sega']
 
 spanish_to_english = {"uno": 1,
@@ -31,4 +33,19 @@ def get_first_match(match1, match2):
 
 def make_clickable(val, text):
     return '<a target="_blank" href="{}">{}</a>'.format(val, text)
+
+
+def translate_time(time):
+    if time == 'primeras horas de la mañana':
+        return datetime.time(2, 0)
+    if time == 'noche':
+        return datetime.time(20, 0)
+    if time == 'madrugada':
+        return datetime.time(2, 0)
+    if time == 'mañana':
+        return datetime.time(8, 0)
+    if time == 'medianoche':
+        return datetime.time(23, 59)
+    if time == 'tarde':
+        return datetime.time(15, 0)
 

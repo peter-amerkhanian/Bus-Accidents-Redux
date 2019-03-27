@@ -37,3 +37,6 @@ def death_regex():
                   r'\ssegado\s(\d{1,3}\svidas\b)'
                   ]:
         yield re.compile(regex, re.IGNORECASE)
+
+
+

@@ -23,22 +23,22 @@ def get_time(story):
     match_object1 = time_regex.search(f"{story.title} {story.summary}")
     match_object2 = time_regex_detailed.search(f"{story.title} {story.summary}")
     if match_object1 and match_object2:
-        return get_first_match(match_object1, match_object2).group()
+        return get_first_match(match_object1, match_object2).group(), False
     elif match_object1:
-        return match_object1.group()
+        return match_object1.group(), False
     elif match_object2:
-        return match_object2.group()
+        return match_object2.group(), False
     else:
         match_object3 = time_regex.search(story.article)
         match_object4 = time_regex_detailed.search(story.article)
         if match_object3 and match_object4:
-            return get_first_match(match_object3, match_object4).group()
+            return get_first_match(match_object3, match_object4).group(), True
         elif match_object3:
-            return match_object3.group()
+            return match_object3.group(), True
         elif match_object4:
-            return match_object4.group()
+            return match_object4.group(), True
         else:
-            return None
+            return None, True
 
 
 def get_route(story):
@@ -70,4 +70,3 @@ def get_deaths(story):
             if deaths and int(deaths) < 60:
                 return int(deaths)
     return None
-

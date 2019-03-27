@@ -1,5 +1,6 @@
 from data_retrieval import get_date, get_time, get_deaths, get_route
-from .helpers import make_clickable
+from .helpers import make_clickable, translate_time
+from datetime import datetime
 
 
 class Story:
@@ -14,6 +15,7 @@ class Story:
         self.accident_time = None
         self.route = None
         self.deaths = None
+        self.review_status = None
 
     def __repr__(self):
         return f"Story title: {self.title}\nStory Summary: {self.summary}" \
@@ -25,13 +27,20 @@ class Story:
         self.accident_date = get_date(self)
         if not self.accident_date:
             self.accident_date = self.date
-        self.accident_time = get_time(self)
+        self.accident_time, self.review_status = get_time(self)
+        if self.accident_time:
+            try:
+                self.accident_time = datetime.strptime(self.accident_time, '%H:%M').time()
+            except ValueError:
+                self.accident_time = translate_time(self.accident_time)
         self.route = get_route(self)
         self.deaths = get_deaths(self)
 
     def to_dict(self):
         return {"url": make_clickable(self.url, self.title),
+                "epi": self.summary,
                 "date": self.accident_date,
                 "time": self.accident_time,
                 "deaths": self.deaths,
                 "route": self.route}
+
