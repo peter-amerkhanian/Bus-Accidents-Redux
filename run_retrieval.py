@@ -88,10 +88,10 @@ for index, story in enumerate(all_data):
         final_data.append(story.to_dict())
         # current_story = story
 
-# pprint(final_data)
-# df = pd.DataFrame.from_dict(data, orient='columns')
-# df.to_csv("test.csv")
-# str_io = io.StringIO()
-# HTML(df.to_html(buf=str_io, classes='table table-striped table-dark', escape=False))
-# HTML(df.to_html('text.html'))
-# html_str = str_io.getvalue()
+pprint(final_data)
+df = pd.DataFrame.from_dict(final_data, orient='columns')
+df.to_csv("test.csv")
+str_io = io.StringIO()
+HTML(df.to_html(buf=str_io, classes='table table-striped table-dark', escape=False))
+HTML(df.to_html('text.html'))
+html_str = str_io.getvalue()
