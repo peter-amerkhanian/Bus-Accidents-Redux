@@ -34,8 +34,18 @@ def str2bool(v):
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
 
-def within_two_days(current_story, story):
-    return (story.date == current_story.date or story.date == current_story.date + timedelta(days=1) or story.date == current_story.date - timedelta(days=1))
+def within_two_days(_current_story, _story):
+    today = _story.date == _current_story.date
+    tomorrow = _story.date == _current_story.date + timedelta(days=1)
+    yesterday = _story.date == _current_story.date - timedelta(days=1)
+    return today or tomorrow or yesterday
+
+
+def other_info_matches(_current_story, _story):
+    same_route = _story.route == _current_story.route
+    same_deaths = _story.deaths == _current_story.deaths
+    return same_deaths or same_route
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -46,35 +56,37 @@ try:
 except NameError:
     reload = False
 final_data = []
-current_story = None
+# current_story = None
 all_data = load_data(reload)[::-1]
 for index, story in enumerate(all_data):
     story.process()
     missing_values = [val for val in story.__dict__.values() if not val]
     if len(missing_values) < 2:
-        if current_story and within_two_days(current_story, story):
-            combined_story = {'url': current_story.url,
-                              'epi': current_story.summary,
-                              'date': current_story.accident_date,
-                              'time': current_story.accident_time,
-                              'route': current_story.route}
-            dupes = [current_story]
-            for _story in all_data[index:]:
-                if within_two_days(current_story, _story):
-                    dupes.append(_story)
-                    # all_data.remove(_story)
-            combined_story["deaths"] = [story.deaths for story in dupes if story.deaths][-1]
-            combined_story["time"] = min([story.accident_time for story in dupes if story.accident_time])
-            combined_story["route"] = [story.route for story in dupes if story.route][0]
-            print(dupes)
-            print(combined_story)
-
-            print("==========")
-            # final_data.remove(current_story.to_dict())
-            final_data.append(combined_story)
-        else:
-            final_data.append(story.to_dict())
-        current_story = story
+        # if current_story and within_two_days(current_story, story) and other_info_matches(current_story, story):
+        #     combined_story = {'url': current_story.url,
+        #                       'epi': current_story.summary,
+        #                       'date': current_story.accident_date,
+        #                       'time': current_story.accident_time,
+        #                       'route': current_story.route}
+        #     dupes = [current_story]
+        #     for _story in all_data[index:]:
+        #         _story.process()
+        #         if within_two_days(current_story, _story) and other_info_matches(current_story, story):
+        #             dupes.append(_story)
+        #             # all_data.remove(_story)
+        #     combined_story["deaths"] = [story.deaths for story in dupes if story.deaths][-1]
+        #     combined_story["time"] = min([story.accident_time for story in dupes if story.accident_time])
+        #     combined_story["route"] = [story.route for story in dupes if story.route][0]
+        #     print(dupes)
+        #     print(combined_story)
+        #
+        #     print("==========")
+        #     # final_data.remove(current_story.to_dict())
+        #     final_data.append(combined_story)
+        # else:
+            # print(story)
+        final_data.append(story.to_dict())
+        # current_story = story
 
 # pprint(final_data)
 # df = pd.DataFrame.from_dict(data, orient='columns')
