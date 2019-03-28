@@ -1,15 +1,12 @@
-import sys
-from os.path import dirname, abspath
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
 import argparse
-from data_processing.data_retrieval import pickle_soup, str2bool
+from data_processing import pickle_soup, str2bool
 import pickle
 import pandas as pd
 pd.options.display.float_format = '{:,.0f}'.format
 pd.set_option('display.max_colwidth', -1)
 
 
-def load_data(_reload=True):
+def load_data(_reload=False):
     if _reload:
         pickle_soup(10)
     with open("data_processing/data_retrieval/articles.pickle", "rb") as f:
