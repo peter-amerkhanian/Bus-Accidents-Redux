@@ -56,42 +56,17 @@ try:
 except NameError:
     reload = False
 final_data = []
-# current_story = None
-all_data = load_data(reload)[::-1]
+all_data = load_data(reload)
 for index, story in enumerate(all_data):
     story.process()
     missing_values = [val for val in story.__dict__.values() if not val]
     if len(missing_values) < 2:
-        # if current_story and within_two_days(current_story, story) and other_info_matches(current_story, story):
-        #     combined_story = {'url': current_story.url,
-        #                       'epi': current_story.summary,
-        #                       'date': current_story.accident_date,
-        #                       'time': current_story.accident_time,
-        #                       'route': current_story.route}
-        #     dupes = [current_story]
-        #     for _story in all_data[index:]:
-        #         _story.process()
-        #         if within_two_days(current_story, _story) and other_info_matches(current_story, story):
-        #             dupes.append(_story)
-        #             # all_data.remove(_story)
-        #     combined_story["deaths"] = [story.deaths for story in dupes if story.deaths][-1]
-        #     combined_story["time"] = min([story.accident_time for story in dupes if story.accident_time])
-        #     combined_story["route"] = [story.route for story in dupes if story.route][0]
-        #     print(dupes)
-        #     print(combined_story)
-        #
-        #     print("==========")
-        #     # final_data.remove(current_story.to_dict())
-        #     final_data.append(combined_story)
-        # else:
-            # print(story)
         final_data.append(story.to_dict())
-        # current_story = story
 
-pprint(final_data)
+print("data successfully initialized.")
 df = pd.DataFrame.from_dict(final_data, orient='columns')
-df.to_csv("test.csv")
+df.to_csv("for_exploration.csv")
 str_io = io.StringIO()
 HTML(df.to_html(buf=str_io, classes='table table-striped table-dark', escape=False))
-HTML(df.to_html('text.html'))
+HTML(df.to_html('table_text.html'))
 html_str = str_io.getvalue()
