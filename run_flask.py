@@ -1,9 +1,13 @@
+import pickle
 from flask import Flask, render_template, Markup
-from run_cleaning import html_str
 
 app = Flask(__name__)
 
+with open('data_processing/raw_data.pickle', 'rb') as f:
+    html_table = pickle.load(f)
+
 
 @app.route('/')
-def hello_world(table=Markup(html_str)):
+def hello_world(table=Markup(html_table)):
     return render_template('table.html', table=table)
+

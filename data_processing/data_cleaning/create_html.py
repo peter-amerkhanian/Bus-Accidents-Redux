@@ -8,3 +8,4 @@ def make_html_table(dataframe, status):
     # This creates an HTML file too:
     # HTML(dataframe.to_html('data_processing/{}_table_text.html'.format(status)))
     return str_io.getvalue()
+
