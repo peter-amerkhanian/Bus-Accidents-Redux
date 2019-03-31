@@ -1,6 +1,7 @@
 import pickle
 from flask import Flask, render_template, Markup
 
+
 app = Flask(__name__)
 
 with open('data_processing/processed_data.pickle', 'rb') as f:
