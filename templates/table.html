@@ -8,39 +8,35 @@
               padding: 50px 0;
               position: relative;
             }
-
-
-
     </style>
 </head>
-<body>
-<title> Bus Accidents</title>
+<title>Bus Accidents</title>
 <div class="container">
     <div class="jumbotron mb-4">
         <div class="container">
-            <h2 role="title" class="display-4">Bus Accidents in Ecuador</h2>
-            <p class="lead">
-                A database of fatal bus accidents in Ecuador
+            <h3>Inter-provincial Bus Accidents in Ecuador</h3>
+            <p>
+                An automated data pipeline for monitoring Ecuador's inter-provincial bus accidents.
+
             </p>
-            <hr class="my-4">
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Coming soon:</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Visuals</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">JSON</a>
-                </li>
-            </ul>
         </div>
+
+    </div>
+            <ul class="nav nav-tabs nav-fill">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">The Data</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About the Project</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Downloads</a>
+            </li>
+        </ul>
     </div>
 </div>
+<body>
 <div class="container">
-    {{ table }}
+    {{ table_processed }}
 </div>
 </body>
