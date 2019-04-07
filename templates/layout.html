@@ -1,0 +1,41 @@
+<!doctype html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style type="text/css">
+      body {
+              margin: 5px;
+              padding: 50px 0;
+              position: relative;
+              background-color:#fdfdfd;
+            }
+    </style>
+</head>
+<body>
+<title>Bus Accidents</title>
+<div class="container border border-bottom-0 mt-1 mb-4">
+    <div class="container mt-5">
+        <h3>Inter-provincial Bus Accidents in Ecuador</h3>
+        <p>
+            An automated data pipeline for monitoring Ecuador's inter-provincial bus accidents.
+        </p>
+    </div>
+    {% set navigation_bar = [
+    ('/processed-table', 'processed', 'Processed Data'),
+    ('/raw-table', 'raw', 'Raw Data'),
+    ('/about', 'about', 'About the Project'),
+    ('/downloads', 'downloads', 'Downloads')
+    ] -%}
+    <ul class="nav nav-tabs nav-fill">
+        {% for href, id, caption in navigation_bar %}
+        <li class="nav-item">
+            <a {% if id == active_page %} class="nav-link active"
+               {% else %} class="nav-link"
+               {% endif %} href="{{ href }}">{{ caption }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% block content %}
+{% endblock content %}
+</body>

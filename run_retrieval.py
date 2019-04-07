@@ -35,7 +35,7 @@ if __name__ == "__main__":
         reload = False
     final_data = create_raw_data(reload)
     df = pd.DataFrame.from_dict(final_data, orient='columns')
-    df.to_csv("data_processing/raw_data.csv")
+    df.to_csv("data_processing/raw_data.csv", index=False)
     html_str = make_html_table(df, status="raw")
     with open('data_processing/raw_data.pickle', 'wb') as f:
         pickle.dump(html_str, f)
