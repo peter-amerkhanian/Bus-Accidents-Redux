@@ -1,8 +1,8 @@
 import argparse
-from data_processing import pickle_soup, str2bool
+from data_retrieval import pickle_soup, str2bool
 import pickle
 import pandas as pd
-from data_processing.data_cleaning import make_html_table
+from data_cleaning import make_html_table
 
 pd.options.display.float_format = '{:,.0f}'.format
 pd.set_option('display.max_colwidth', -1)
@@ -11,7 +11,7 @@ pd.set_option('display.max_colwidth', -1)
 def load_data(_reload=False):
     if _reload:
         pickle_soup(10)
-    with open("data_processing/data_retrieval/articles.pickle", "rb") as f:
+    with open("data_retrieval/articles.pickle", "rb") as f:
         temp_data = pickle.load(f)
     return temp_data
 
@@ -33,10 +33,12 @@ if __name__ == "__main__":
         reload = args.arg1
     except NameError:
         reload = False
+    if reload:
+        print("Retrieving new data")
     final_data = create_raw_data(reload)
     df = pd.DataFrame.from_dict(final_data, orient='columns')
-    df.to_csv("data_processing/raw_data.csv", index=False)
+    df.to_csv("data/raw_data.csv", index=False)
     html_str = make_html_table(df, status="raw")
-    with open('data_processing/raw_data.pickle', 'wb') as f:
+    with open('data/raw_data.pickle', 'wb') as f:
         pickle.dump(html_str, f)
     print("data successfully initialized.")
