@@ -1,6 +1,6 @@
-#Inter-provincial Bus Accidents in Ecuador
+# Inter-provincial Bus Accidents in Ecuador
 Tracking fatal bus accidents in Ecuador
-##Methods
+## Methods
 This program scrapes news stories about fatal inter-provincial bus
 accidents in Ecuador from the website of El Comercio, one of Ecuador's 
 major newspapers. Stories are then searched, using regular expressions,
@@ -11,7 +11,7 @@ and some translation of non digit times is then done using Pandas,
  though the program produces both a 'raw' and 'processed' dataset
  for those who wish to view data that has been less abstracted.
  
- ##Setup/Run
+ ## Setup/Run
  Built in Python 3.6, that version or higher recommended.
 Run the following commands in the main directory, "Bus_Retry"
  ```
